@@ -4,12 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>AGUS777 • CASINO VIRTUAL</title>
-    <meta name="description" content="AGUS777 Virtual Casino - Simulasi judi online tanpa login. Main slot, roulette, dice dengan uang virtual.">
-    <meta name="keywords" content="virtual casino, slot online, roulette, dadu, simulasi judi, game virtual">
-    <meta name="author" content="AGUS PROJECT">
+    <meta name="description" content="AGUS777 Virtual Casino - Simulasi judi online tanpa login.">
     
-    <!-- FAVICON (chip/dadu) -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎲</text></svg>">
+    <!-- FAVICON -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎰</text></svg>">
     
     <!-- FONTS & ICONS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,17 +15,951 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Poppins:wght@300;400;600;700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
-    <!-- HOWLER.JS (untuk sound nanti) -->
+    <!-- HOWLER.JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
     
-    <!-- CSS UTAMA (akan dibuat terpisah nanti) -->
-    <link rel="stylesheet" href="style.css">
+    <!-- CSS UTAMA -->
+    <style>
+        /* ========== RESET & BASE ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #0a0a0a;
+            color: #fff;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* ========== GLITTER BACKGROUND ========== */
+        .glitter-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            background: radial-gradient(circle at 20% 30%, rgba(212, 175, 55, 0.05) 0%, transparent 20%),
+                        radial-gradient(circle at 80% 70%, rgba(255, 215, 0, 0.05) 0%, transparent 20%),
+                        repeating-linear-gradient(45deg, rgba(255,255,255,0.01) 0px, rgba(255,255,255,0.01) 2px, transparent 2px, transparent 10px);
+            animation: glitterFloat 8s infinite alternate;
+        }
+
+        @keyframes glitterFloat {
+            0% { opacity: 0.3; transform: scale(1); }
+            100% { opacity: 0.6; transform: scale(1.05); }
+        }
+
+        /* ========== MAIN WRAPPER ========== */
+        .wrapper {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ========== HEADER ========== */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(10,10,10,0.8);
+            backdrop-filter: blur(5px);
+            padding: 20px 30px;
+            border-radius: 50px;
+            border: 1px solid #D4AF37;
+            box-shadow: 0 0 20px rgba(212,175,55,0.2);
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, #D4AF37, #FFD700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(255,215,0,0.5);
+            line-height: 1;
+        }
+
+        .japanese-text {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 0.8rem;
+            color: #aaa;
+            letter-spacing: 1px;
+        }
+
+        .online-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0,0,0,0.5);
+            padding: 10px 20px;
+            border-radius: 40px;
+            border: 1px solid #00ff88;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            background: #00ff88;
+            border-radius: 50%;
+            animation: blink 1.5s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .online-count {
+            font-weight: bold;
+            color: #00ff88;
+        }
+
+        /* ========== LAYOUT 3 KOLOM ========== */
+        .container {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        /* SIDEBAR KIRI */
+        .sidebar-left {
+            flex: 1;
+            background: rgba(20, 20, 20, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            height: fit-content;
+        }
+
+        .sidebar-left h3 {
+            color: #D4AF37;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #D4AF37;
+            padding-bottom: 8px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .live-feed {
+            margin-bottom: 30px;
+        }
+
+        .feed-container {
+            max-height: 300px;
+            overflow-y: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .feed-item {
+            background: rgba(0,0,0,0.5);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            border-left: 3px solid #D4AF37;
+            color: #ddd;
+        }
+
+        .feed-item.win { border-left-color: #00ff88; }
+        .feed-item.lose { border-left-color: #ff4444; }
+        .feed-item.jackpot { border-left-color: #D4AF37; background: rgba(212,175,55,0.1); }
+
+        .top-winners, .hot-games {
+            margin-bottom: 25px;
+        }
+
+        .winners-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .winner-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            padding: 5px 0;
+            border-bottom: 1px dashed rgba(255,255,255,0.1);
+        }
+
+        .hot-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            color: #fff;
+        }
+
+        .hot-item .players {
+            color: #D4AF37;
+            font-weight: bold;
+        }
+
+        /* MAIN CONTENT */
+        .main-content {
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* BALANCE CARD */
+        .balance-card {
+            background: rgba(20,20,20,0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 25px;
+            border: 2px solid rgba(212,175,55,0.3);
+        }
+
+        .balance-label {
+            font-size: 1rem;
+            color: #D4AF37;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+
+        .balance-amount {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #fff, #D4AF37);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .balance-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn-green {
+            background: linear-gradient(45deg, #00b09b, #96c93d);
+            color: #000;
+        }
+        .btn-green:hover { transform: translateY(-2px); box-shadow: 0 5px 15px #00b09b; }
+
+        .btn-red {
+            background: linear-gradient(45deg, #8B0000, #b22222);
+            color: white;
+        }
+        .btn-red:hover { transform: translateY(-2px); box-shadow: 0 5px 15px #8B0000; }
+
+        .btn-blue {
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            color: white;
+        }
+
+        .btn-orange {
+            background: linear-gradient(45deg, #ff8c00, #ffaa00);
+            color: black;
+        }
+
+        /* LEVEL SECTION */
+        .level-section {
+            background: rgba(0,0,0,0.5);
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid #D4AF37;
+        }
+
+        .level-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            color: #D4AF37;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 15px;
+            background: #333;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #D4AF37, #FFD700);
+            border-radius: 20px;
+            transition: width 0.5s ease;
+        }
+
+        .streak-badge {
+            display: inline-block;
+            background: rgba(212,175,55,0.2);
+            padding: 5px 15px;
+            border-radius: 40px;
+            color: #FFD700;
+            font-weight: bold;
+            border: 1px solid #FFD700;
+        }
+
+        /* GAMES GRID */
+        .games-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .game-card {
+            background: rgba(15,15,15,0.8);
+            backdrop-filter: blur(5px);
+            border-radius: 30px;
+            padding: 25px;
+            border: 1px solid rgba(212,175,55,0.3);
+        }
+
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+        }
+
+        .game-header h2 {
+            font-size: 1.5rem;
+            font-family: 'Playfair Display', serif;
+            color: #D4AF37;
+        }
+
+        .jp-text {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 0.9rem;
+            color: #888;
+            margin-right: 10px;
+        }
+
+        .game-badge {
+            background: linear-gradient(45deg, #8B0000, #b22222);
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        /* SLOT */
+        .reels-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            background: #000;
+            padding: 30px 20px;
+            border-radius: 30px;
+            border: 3px solid #D4AF37;
+            margin-bottom: 20px;
+        }
+
+        .reel {
+            width: 100px;
+            height: 100px;
+            background: #111;
+            border: 2px solid #D4AF37;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+
+        .jackpot-display {
+            text-align: center;
+            background: linear-gradient(45deg, #8B0000, #D4AF37);
+            padding: 10px;
+            border-radius: 50px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 25px;
+            margin-bottom: 20px;
+        }
+
+        .bet-control {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+
+        .bet-control input {
+            flex: 1;
+            padding: 12px;
+            background: #222;
+            border: 1px solid #D4AF37;
+            color: white;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        .bet-minus, .bet-plus, .btn-max {
+            width: 50px;
+            height: 50px;
+            border: none;
+            background: #333;
+            color: #D4AF37;
+            font-size: 1.5rem;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .spin-controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-spin, .btn-auto, .btn-stop {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 15px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+        }
+
+        .btn-spin {
+            background: linear-gradient(45deg, #D4AF37, #FFD700);
+            color: black;
+        }
+        .btn-auto { background: #333; color: #D4AF37; border: 1px solid #D4AF37; }
+        .btn-stop { background: #8B0000; color: white; }
+
+        /* ROULETTE */
+        .wheel-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        #rouletteCanvas {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: #1a1a2e;
+        }
+
+        .ball {
+            position: absolute;
+            font-size: 1.5rem;
+            animation: bounce 0.5s infinite alternate;
+        }
+
+        @keyframes bounce {
+            from { transform: translateY(-5px); }
+            to { transform: translateY(5px); }
+        }
+
+        .chip-selector {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+
+        .chip {
+            padding: 8px 15px;
+            background: #333;
+            border: 2px solid #D4AF37;
+            border-radius: 40px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .roulette-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin: 15px 0;
+        }
+
+        .btn-clear, .btn-rebet, .btn-double {
+            padding: 10px 15px;
+            background: #222;
+            border: 1px solid #666;
+            border-radius: 10px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .history-numbers {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            padding: 10px;
+            background: #111;
+            border-radius: 20px;
+        }
+        .history-number {
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-weight: bold;
+            background: #222;
+        }
+        .history-number.red { background: #8B0000; }
+        .history-number.black { background: #111; border: 1px solid white; }
+        .history-number.green { background: #00b09b; }
+
+        /* DICE */
+        .dice-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .dice-bowl {
+            display: flex;
+            gap: 40px;
+            background: rgba(0,0,0,0.5);
+            padding: 40px;
+            border-radius: 200px 200px 50px 50px;
+            border: 3px solid #D4AF37;
+        }
+
+        .dice {
+            width: 100px;
+            height: 100px;
+            background: white;
+            color: black;
+            font-size: 5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 20px;
+        }
+
+        .dice-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .dice-option {
+            background: #222;
+            border: 1px solid #D4AF37;
+            padding: 10px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+        .dice-option.active { background: #D4AF37; color: black; }
+
+        .quick-bets {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 15px 0;
+        }
+
+        .quick-btn {
+            padding: 8px 20px;
+            background: #333;
+            border: 1px solid #D4AF37;
+            border-radius: 40px;
+            color: #D4AF37;
+            cursor: pointer;
+        }
+
+        .dice-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-shake {
+            background: linear-gradient(45deg, #D4AF37, #8B0000);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        /* SIDEBAR KANAN */
+        .sidebar-right {
+            flex: 1;
+            background: rgba(20,20,20,0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid rgba(212,175,55,0.3);
+            height: fit-content;
+        }
+
+        .promo-carousel {
+            position: relative;
+            height: 60px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            background: rgba(0,0,0,0.5);
+            border-radius: 15px;
+        }
+
+        .promo-slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 1s ease;
+            font-weight: bold;
+            color: #FFD700;
+        }
+        .promo-slide.active { opacity: 1; }
+
+        .flash-sale {
+            background: linear-gradient(45deg, #8B0000, #D4AF37);
+            padding: 20px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .countdown {
+            font-size: 2rem;
+            font-weight: bold;
+            font-family: monospace;
+            background: rgba(0,0,0,0.5);
+            padding: 10px;
+            border-radius: 15px;
+            margin-top: 10px;
+        }
+
+        .daily-login {
+            background: rgba(0,0,0,0.5);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            margin: 15px 0;
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #222;
+            border-radius: 8px;
+            font-size: 0.8rem;
+        }
+        .calendar-day.claimed { background: #00b09b; color: black; }
+        .calendar-day.today { border: 2px solid #D4AF37; }
+
+        .btn-claim {
+            width: 100%;
+            padding: 12px;
+            background: #D4AF37;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .referral-card {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            padding: 20px;
+            border-radius: 20px;
+            text-align: center;
+            border: 1px solid #D4AF37;
+        }
+
+        .btn-copy {
+            background: #00b09b;
+            border: none;
+            padding: 10px 30px;
+            border-radius: 50px;
+            font-weight: bold;
+            margin-top: 15px;
+            cursor: pointer;
+        }
+
+        /* DISCLAIMER */
+        .disclaimer-banner {
+            background: #8B0000;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            line-height: 2;
+            border: 3px solid #FFD700;
+            margin: 30px 0;
+        }
+
+        .jp-disclaimer {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 1rem;
+            display: block;
+            margin-top: 15px;
+            color: #FFD700;
+        }
+
+        /* FOOTER */
+        .footer {
+            background: rgba(0,0,0,0.9);
+            border-radius: 30px;
+            padding: 30px;
+            border: 1px solid #D4AF37;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .footer-links, .payment-methods, .providers, .certificates {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #333;
+        }
+
+        .footer a {
+            color: #D4AF37;
+            text-decoration: none;
+        }
+
+        .payment-icons, .providers {
+            color: #aaa;
+            word-spacing: 10px;
+            line-height: 1.8;
+        }
+
+        .certificates span {
+            display: inline-block;
+            background: rgba(212,175,55,0.1);
+            padding: 5px 15px;
+            border-radius: 40px;
+            margin-right: 10px;
+            border: 1px solid #D4AF37;
+        }
+
+        .copyright {
+            text-align: center;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* MODALS */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active { display: flex; }
+
+        .modal-content {
+            background: #1a1a2e;
+            border-radius: 30px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            border: 3px solid #D4AF37;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 2rem;
+            color: #D4AF37;
+            cursor: pointer;
+        }
+
+        .payment-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .payment-method {
+            padding: 12px;
+            background: #222;
+            border: 1px solid #D4AF37;
+            border-radius: 10px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .nominal-input {
+            margin: 20px 0;
+        }
+        .nominal-input input {
+            width: 100%;
+            padding: 15px;
+            background: #222;
+            border: 1px solid #D4AF37;
+            border-radius: 15px;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .btn-deposit-submit, .btn-withdraw-submit {
+            width: 100%;
+            padding: 15px;
+            background: #D4AF37;
+            border: none;
+            border-radius: 15px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        /* JACKPOT MODAL */
+        .jackpot-modal .modal-content {
+            background: linear-gradient(45deg, #8B0000, #D4AF37);
+            text-align: center;
+        }
+        .jackpot-modal h1 {
+            font-size: 3rem;
+            animation: jackpotPulse 0.5s infinite alternate;
+        }
+        @keyframes jackpotPulse {
+            from { text-shadow: 0 0 20px white; }
+            to { text-shadow: 0 0 50px gold; }
+        }
+
+        /* SOUND CONTROL */
+        .sound-control {
+            position: fixed;
+            bottom: 20px;
+            right: 100px;
+            z-index: 9997;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(0,0,0,0.7);
+            padding: 10px;
+            border-radius: 50px;
+            border: 1px solid #D4AF37;
+        }
+
+        .sound-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #D4AF37;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cs-chat {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, #D4AF37, #8B0000);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 9997;
+            font-size: 1.5rem;
+        }
+        .cs-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: red;
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1200px) {
+            .container {
+                flex-direction: column;
+            }
+            .balance-amount { font-size: 2rem; }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            .balance-actions { flex-direction: column; }
+            .reels-container { gap: 5px; }
+            .reel { width: 70px; height: 70px; font-size: 2rem; }
+            .dice-bowl { gap: 20px; padding: 20px; }
+            .dice { width: 70px; height: 70px; font-size: 3rem; }
+        }
+    </style>
 </head>
 <body>
-    <!-- BACKGROUND EFFECT: glitter particles -->
     <div class="glitter-bg" id="glitterBg"></div>
     
-    <!-- SOUND CONTROL (pojok kanan bawah) -->
+    <!-- SOUND CONTROL -->
     <div class="sound-control">
         <button id="soundToggle" class="sound-btn">
             <i class="fas fa-volume-up"></i>
@@ -35,112 +967,115 @@
         <input type="range" id="volumeSlider" min="0" max="100" value="70" class="volume-slider">
     </div>
     
-    <!-- LIVE CHAT CS (pojok kanan bawah, sebelah sound) -->
+    <!-- CS CHAT -->
     <div class="cs-chat" id="csChatBtn">
         <i class="fas fa-headset"></i>
         <span class="cs-badge">1</span>
     </div>
     
-    <!-- MAIN WRAPPER -->
-    <div class="container">
-        <!-- SIDEBAR KIRI (LIVE FEED) -->
-        <aside class="sidebar-left">
-            <div class="live-feed">
-                <h3><i class="fas fa-satellite-dish"></i> LIVE BET</h3>
-                <div class="feed-container" id="liveFeed">
-                    <!-- akan diisi js -->
-                </div>
+    <div class="wrapper">
+        <!-- HEADER -->
+        <header class="header">
+            <div class="logo-area">
+                <h1 class="logo">AGUS777</h1>
+                <div class="japanese-text">「完全シミュレーション - 入金不要 - 即プレイ」</div>
             </div>
-            
-            <div class="top-winners">
-                <h3><i class="fas fa-trophy"></i> TOP WINNERS</h3>
-                <div class="winners-list" id="topWinners">
-                    <!-- akan diisi js -->
-                </div>
+            <div class="online-status">
+                <span class="dot"></span>
+                <span class="online-count" id="onlineCount">1,847</span> ONLINE
             </div>
-            
-            <div class="hot-games">
-                <h3><i class="fas fa-fire"></i> HOT GAMES</h3>
-                <div class="hot-list">
-                    <div class="hot-item"><span>Golden Fortune</span> <span class="players">347</span></div>
-                    <div class="hot-item"><span>Shinobi Dice</span> <span class="players">256</span></div>
-                    <div class="hot-item"><span>Diamond Wheel</span> <span class="players">189</span></div>
-                </div>
-            </div>
-        </aside>
+        </header>
         
-        <!-- MAIN CONTENT (HEADER + GAMES) -->
-        <main class="main-content">
-            <!-- HEADER -->
-            <header class="header">
-                <div class="logo-area">
-                    <h1 class="logo">AGUS777</h1>
-                    <div class="japanese-text">「完全シミュレーション - 入金不要 - 即プレイ」</div>
-                </div>
-                <div class="online-status">
-                    <span class="dot"></span>
-                    <span class="online-count" id="onlineCount">1,847</span> ONLINE
-                </div>
-            </header>
-            
-            <!-- SALDO UTAMA -->
-            <div class="balance-card glass">
-                <div class="balance-label">
-                    <i class="fas fa-gem"></i> VIRTUAL BALANCE
-                </div>
-                <div class="balance-amount" id="balanceAmount">Rp 4.000.000.000</div>
-                <div class="balance-actions">
-                    <button class="btn btn-green" id="depositBtn"><i class="fas fa-credit-card"></i> DEPOSIT VIRTUAL</button>
-                    <button class="btn btn-red" id="withdrawBtn"><i class="fas fa-money-bill-wave"></i> WITHDRAW VIRTUAL</button>
-                    <button class="btn btn-blue" id="resetBalanceBtn"><i class="fas fa-undo-alt"></i> RESET</button>
-                    <button class="btn btn-orange" id="maxBetBtn"><i class="fas fa-bolt"></i> MAX BET</button>
-                </div>
-            </div>
-            
-            <!-- LEVEL PROGRESS -->
-            <div class="level-section">
-                <div class="level-label">
-                    <span>VIP SILVER → GOLD</span>
-                    <span id="levelProgressText">0 / 10.000.000</span>
-                </div>
-                <div class="progress-bar">
-                    <div class="progress-fill" id="levelProgressFill" style="width: 0%;"></div>
-                </div>
-                <div class="streak-badge">
-                    <i class="fas fa-fire"></i> STREAK: <span id="streakCount">3</span> HARI
-                </div>
-            </div>
-            
-            <!-- 3 GAME UTAMA -->
-            <div class="games-grid">
-                <!-- GAME 1: SLOT -->
-                <div class="game-card slot-card">
-                    <div class="game-header">
-                        <h2><span class="jp-text">「ゴールデン」</span> GOLDEN FORTUNE</h2>
-                        <div class="game-badge">RTP 98.7% <i class="fas fa-fire"></i></div>
+        <!-- 3 KOLOM UTAMA -->
+        <div class="container">
+            <!-- SIDEBAR KIRI -->
+            <aside class="sidebar-left">
+                <div class="live-feed">
+                    <h3><i class="fas fa-satellite-dish"></i> LIVE BET</h3>
+                    <div class="feed-container" id="liveFeed">
+                        <div class="feed-item win">[14:23] user***45 🔴 MENANG Rp 2.300.000 di Slot</div>
+                        <div class="feed-item lose">[14:22] user***78 🟢 KALAH Rp 500.000 di Roulette</div>
+                        <div class="feed-item jackpot">[14:21] user***12 🔥 JACKPOT Rp 1.200.000 di Dice!</div>
                     </div>
-                    
-                    <div class="slot-machine">
-                        <div class="reels-container" id="slotReels">
-                            <div class="reel" id="reel1">🍒</div>
-                            <div class="reel" id="reel2">🍒</div>
-                            <div class="reel" id="reel3">🍒</div>
+                </div>
+                
+                <div class="top-winners">
+                    <h3><i class="fas fa-trophy"></i> TOP WINNERS</h3>
+                    <div class="winners-list" id="topWinners">
+                        <div class="winner-item"><span>🥇 user***47</span> <span>Rp 287.000.000</span></div>
+                        <div class="winner-item"><span>🥈 user***92</span> <span>Rp 156.000.000</span></div>
+                        <div class="winner-item"><span>🥉 user***13</span> <span>Rp 98.000.000</span></div>
+                    </div>
+                </div>
+                
+                <div class="hot-games">
+                    <h3><i class="fas fa-fire"></i> HOT GAMES</h3>
+                    <div class="hot-list">
+                        <div class="hot-item"><span>Golden Fortune</span> <span class="players">347</span></div>
+                        <div class="hot-item"><span>Shinobi Dice</span> <span class="players">256</span></div>
+                        <div class="hot-item"><span>Diamond Wheel</span> <span class="players">189</span></div>
+                    </div>
+                </div>
+            </aside>
+            
+            <!-- MAIN CONTENT -->
+            <main class="main-content">
+                <!-- BALANCE -->
+                <div class="balance-card">
+                    <div class="balance-label">
+                        <i class="fas fa-gem"></i> VIRTUAL BALANCE
+                    </div>
+                    <div class="balance-amount" id="balanceAmount">Rp 4.000.000.000</div>
+                    <div class="balance-actions">
+                        <button class="btn btn-green" id="depositBtn"><i class="fas fa-credit-card"></i> DEPOSIT</button>
+                        <button class="btn btn-red" id="withdrawBtn"><i class="fas fa-money-bill-wave"></i> WITHDRAW</button>
+                        <button class="btn btn-blue" id="resetBalanceBtn"><i class="fas fa-undo-alt"></i> RESET</button>
+                        <button class="btn btn-orange" id="maxBetBtn"><i class="fas fa-bolt"></i> MAX BET</button>
+                    </div>
+                </div>
+                
+                <!-- LEVEL -->
+                <div class="level-section">
+                    <div class="level-label">
+                        <span>VIP SILVER → GOLD</span>
+                        <span id="levelProgressText">0 / 10.000.000</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="levelProgressFill" style="width: 0%;"></div>
+                    </div>
+                    <div class="streak-badge">
+                        <i class="fas fa-fire"></i> STREAK: <span id="streakCount">3</span> HARI
+                    </div>
+                </div>
+                
+                <!-- GAMES -->
+                <div class="games-grid">
+                    <!-- GAME 1: SLOT -->
+                    <div class="game-card">
+                        <div class="game-header">
+                            <h2><span class="jp-text">「ゴールデン」</span> GOLDEN FORTUNE</h2>
+                            <div class="game-badge">RTP 98.7% <i class="fas fa-fire"></i></div>
                         </div>
                         
-                        <div class="slot-info">
+                        <div class="slot-machine">
+                            <div class="reels-container">
+                                <div class="reel" id="reel1">🍒</div>
+                                <div class="reel" id="reel2">🍒</div>
+                                <div class="reel" id="reel3">🍒</div>
+                            </div>
+                            
                             <div class="jackpot-display">
                                 <span>JACKPOT</span>
                                 <span id="jackpotAmount">Rp 587.432.000</span>
                             </div>
-                        </div>
-                        
-                        <div class="slot-controls">
+                            
                             <div class="bet-control">
                                 <button class="bet-minus" id="slotBetMinus">-</button>
                                 <input type="number" id="slotBet" value="500000" min="10000" max="10000000" step="10000">
                                 <button class="bet-plus" id="slotBetPlus">+</button>
                                 <button class="btn-max" id="slotMaxBet">MAX</button>
                             </div>
+                            
                             <div class="spin-controls">
                                 <button class="btn-spin" id="slotSpin"><i class="fas fa-play"></i> SPIN</button>
                                 <button class="btn-auto" id="slotAuto"><i class="fas fa-sync-alt"></i> AUTO</button>
@@ -148,26 +1083,19 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                
-                <!-- GAME 2: ROULETTE -->
-                <div class="game-card roulette-card">
-                    <div class="game-header">
-                        <h2><span class="jp-text">「ダイヤモンド」</span> DIAMOND WHEEL</h2>
-                    </div>
                     
-                    <div class="roulette-area">
-                        <div class="wheel-container" id="wheelContainer">
-                            <!-- roda roulette akan digambar canvas -->
-                            <canvas id="rouletteCanvas" width="200" height="200"></canvas>
-                            <div class="ball" id="rouletteBall">⚪</div>
+                    <!-- GAME 2: ROULETTE -->
+                    <div class="game-card">
+                        <div class="game-header">
+                            <h2><span class="jp-text">「ダイヤモンド」</span> DIAMOND WHEEL</h2>
                         </div>
                         
-                        <div class="betting-table" id="bettingTable">
-                            <!-- akan diisi js nanti -->
-                        </div>
-                        
-                        <div class="roulette-controls">
+                        <div class="roulette-area">
+                            <div class="wheel-container">
+                                <canvas id="rouletteCanvas" width="200" height="200"></canvas>
+                                <div class="ball" id="rouletteBall">⚪</div>
+                            </div>
+                            
                             <div class="chip-selector">
                                 <button class="chip" data-value="1000">1rb</button>
                                 <button class="chip" data-value="10000">10rb</button>
@@ -175,142 +1103,130 @@
                                 <button class="chip" data-value="1000000">1jt</button>
                                 <button class="chip" data-value="10000000">10jt</button>
                             </div>
+                            
                             <div class="roulette-actions">
                                 <button class="btn-spin" id="rouletteSpin">SPIN WHEEL</button>
                                 <button class="btn-clear" id="rouletteClear">CLEAR</button>
                                 <button class="btn-rebet" id="rouletteRebet">REBET</button>
                                 <button class="btn-double" id="rouletteDouble">DOUBLE</button>
                             </div>
+                            
+                            <div class="history-numbers" id="rouletteHistory">
+                                <div class="history-number green">0</div>
+                                <div class="history-number red">32</div>
+                                <div class="history-number black">15</div>
+                            </div>
                         </div>
-                        
-                        <div class="history-numbers" id="rouletteHistory">
-                            <!-- akan diisi js -->
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- GAME 3: DICE -->
-                <div class="game-card dice-card">
-                    <div class="game-header">
-                        <h2><span class="jp-text">「忍者のサイコロ」</span> SHINOBI DICE</h2>
                     </div>
                     
-                    <div class="dice-area">
-                        <div class="dice-bowl">
-                            <div class="dice" id="dice1">⚀</div>
-                            <div class="dice" id="dice2">⚀</div>
+                    <!-- GAME 3: DICE -->
+                    <div class="game-card">
+                        <div class="game-header">
+                            <h2><span class="jp-text">「忍者のサイコロ」</span> SHINOBI DICE</h2>
                         </div>
                         
-                        <div class="dice-betting">
-                            <div class="betting-options" id="diceOptions">
-                                <!-- akan diisi js -->
+                        <div class="dice-area">
+                            <div class="dice-bowl">
+                                <div class="dice" id="dice1">⚀</div>
+                                <div class="dice" id="dice2">⚀</div>
                             </div>
                             
-                            <div class="dice-controls">
-                                <input type="number" id="diceBetAmount" value="100000" min="1000" max="10000000" step="1000">
-                                <div class="quick-bets">
-                                    <button class="quick-btn" data-value="1000">+1rb</button>
-                                    <button class="quick-btn" data-value="10000">+10rb</button>
-                                    <button class="quick-btn" data-value="100000">+100rb</button>
-                                    <button class="quick-btn" data-value="1000000">+1jt</button>
-                                </div>
-                                <div class="dice-actions">
-                                    <button class="btn-shake" id="diceShake"><i class="fas fa-hand-paper"></i> KOCOK DADU</button>
-                                    <button class="btn-clear" id="diceClear">CLEAR</button>
-                                    <button class="btn-double" id="diceDouble">DOUBLE</button>
-                                    <button class="btn-max" id="diceMax">MAX</button>
-                                </div>
+                            <div class="dice-options" id="diceOptions">
+                                <div class="dice-option" data-bet="big"><span>BESAR (8-14)</span> <span>x1</span></div>
+                                <div class="dice-option" data-bet="small"><span>KECIL (3-7)</span> <span>x1</span></div>
+                                <div class="dice-option" data-bet="odd"><span>GANJIL</span> <span>x1</span></div>
+                                <div class="dice-option" data-bet="even"><span>GENAP</span> <span>x1</span></div>
+                                <div class="dice-option" data-bet="double"><span>DOUBLE (sama)</span> <span>x8</span></div>
+                                <div class="dice-option" data-bet="triple"><span>TRIPLE</span> <span>x30</span></div>
+                            </div>
+                            
+                            <input type="number" id="diceBetAmount" value="100000" min="1000" max="10000000" step="1000" style="width: 100%; padding: 15px; background: #222; border: 1px solid #D4AF37; border-radius: 15px; color: white;">
+                            
+                            <div class="quick-bets">
+                                <button class="quick-btn" data-value="1000">+1rb</button>
+                                <button class="quick-btn" data-value="10000">+10rb</button>
+                                <button class="quick-btn" data-value="100000">+100rb</button>
+                                <button class="quick-btn" data-value="1000000">+1jt</button>
+                            </div>
+                            
+                            <div class="dice-actions">
+                                <button class="btn-shake" id="diceShake"><i class="fas fa-hand-paper"></i> KOCOK DADU</button>
+                                <button class="btn-clear" id="diceClear">CLEAR</button>
+                                <button class="btn-double" id="diceDouble">DOUBLE</button>
+                                <button class="btn-max" id="diceMax">MAX</button>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </main>
             
-            <!-- DISCLAIMER BESAR -->
-            <div class="disclaimer-banner">
-                ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️<br>
-                WEBSITE INI 100% UNTUK SIMULASI DAN HIBURAN<br>
-                SEMUA MATA UANG, DEPOSIT, WITHDRAW, DAN HADIAH ADALAH VIRTUAL<br>
-                TIDAK ADA TRANSAKSI KEUANGAN NYATA<br>
-                UNTUK USIA 18+ - MAINLAH DENGAN BIJAK DALAM SIMULASI INI<br>
-                ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️<br>
-                <span class="jp-disclaimer">「このウェブサイトはシミュレーションとエンターテイメントのみを目的としています。すべての通貨は仮想です。」</span>
-            </div>
-            
-            <!-- FOOTER -->
-            <footer class="footer">
-                <div class="footer-links">
-                    <div class="link-alternatif">
-                        <span>🔗 LINK ALTERNATIF:</span>
-                        <a href="#">AGUS777.bet</a> | <a href="#">AGUS777.org</a> | <a href="#">AGUS777.cc</a> | <a href="#">AGUS777.win</a>
+            <!-- SIDEBAR KANAN -->
+            <aside class="sidebar-right">
+                <div class="promo-carousel" id="promoCarousel">
+                    <div class="promo-slide active">🎉 BONUS NEW MEMBER 100%</div>
+                    <div class="promo-slide">💰 CASHBACK MINGGUAN 10%</div>
+                    <div class="promo-slide">🔥 FREE SPIN 50X HARI INI!</div>
+                </div>
+                
+                <div class="flash-sale">
+                    <h4>⚡ BONUS 200% BERAKHIR DALAM:</h4>
+                    <div class="countdown" id="flashCountdown">05:23:47</div>
+                </div>
+                
+                <div class="daily-login">
+                    <h4><i class="fas fa-calendar-alt"></i> DAILY LOGIN BONUS</h4>
+                    <div class="calendar" id="loginCalendar">
+                        <div class="calendar-day claimed">S</div>
+                        <div class="calendar-day claimed">S</div>
+                        <div class="calendar-day claimed">R</div>
+                        <div class="calendar-day today">K</div>
+                        <div class="calendar-day">J</div>
+                        <div class="calendar-day">S</div>
+                        <div class="calendar-day">M</div>
                     </div>
-                    <div class="mirror-links">
-                        <span>🔗 MIRROR:</span>
-                        <a href="#">AGUS777.netlify.app</a> | <a href="#">AGUS777.vercel.app</a>
-                    </div>
-                    <div class="vpn-note">⚡ "GUNAKAN VPN JIKA TERBLOKIR"</div>
+                    <div class="login-streak-text" id="loginStreakText">Login hari ke-3: Dapatkan 50RB FREE BONUS!</div>
+                    <button class="btn-claim" id="claimDailyBonus">🎁 KLAIM BONUS HARIAN</button>
                 </div>
                 
-                <div class="payment-methods">
-                    <span>💳 METODE PEMBAYARAN (VIRTUAL):</span>
-                    <div class="payment-icons">
-                        BCA MANDIRI BRI BNI DANAMON OVO DANA GOPAY LINKAJA SHOPEEPAY PULSA TRI AXIS TELKOMSEL
-                    </div>
-                    <div class="min-depo">MIN DEPO 10K - PROSES 1 MENIT</div>
-                </div>
-                
-                <div class="providers">
-                    <span>🎮 PROVIDER GAME:</span>
-                    PRAGMATIC PLAY HABANERO PG SOFT MICROGAMING JOKER SPADEGAMING CQ9 PLAYSTAR
-                </div>
-                
-                <div class="certificates">
-                    <span>🏆 PAGCOR LICENSE #SI-777</span>
-                    <span>🏆 BMM TESTLAB CERTIFIED</span>
-                    <span>🏆 RNG CERTIFIED FAIR</span>
-                </div>
-                
-                <div class="copyright">
-                    © 2026 AGUS777. All rights reserved. Version 8.5.0
-                </div>
-            </footer>
-        </main>
-        
-        <!-- SIDEBAR KANAN (PROMO) -->
-        <aside class="sidebar-right">
-            <div class="promo-carousel" id="promoCarousel">
-                <div class="promo-slide active">🎉 BONUS NEW MEMBER 100% (MAKS 1JT)</div>
-                <div class="promo-slide">💰 CASHBACK MINGGUAN 10%</div>
-                <div class="promo-slide">🔥 FREE SPIN 50X HARI INI!</div>
-                <div class="promo-slide">🎂 BONUS ULANG TAHUN 500RB</div>
-                <div class="promo-slide">🏆 TURNAMEN HADIAH 1M</div>
-            </div>
-            
-            <div class="flash-sale">
-                <h4>⚡ BONUS 200% BERAKHIR DALAM:</h4>
-                <div class="countdown" id="flashCountdown">05:23:47</div>
-            </div>
-            
-            <div class="jackpot-alert" id="jackpotAlert">
-                <!-- akan muncul notifikasi random -->
-            </div>
-            
-            <div class="daily-login">
-                <h4><i class="fas fa-calendar-alt"></i> DAILY LOGIN BONUS</h4>
-                <div class="calendar" id="loginCalendar">
-                    <!-- akan diisi js -->
-                </div>
-                <div class="login-streak-text" id="loginStreakText">Login hari ke-3: Dapatkan 50RB FREE BONUS!</div>
-                <button class="btn-claim" id="claimDailyBonus">🎁 KLAIM BONUS HARIAN</button>
-            </div>
-            
-            <div class="referral">
                 <div class="referral-card">
                     <h4>AJAK TEMAN DAPET 20% KOMISI!</h4>
                     <button class="btn-copy" id="copyReferralLink">📋 SALIN LINK</button>
                 </div>
+            </aside>
+        </div>
+        
+        <!-- DISCLAIMER -->
+        <div class="disclaimer-banner">
+            ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️<br>
+            WEBSITE INI 100% UNTUK SIMULASI DAN HIBURAN<br>
+            SEMUA MATA UANG ADALAH VIRTUAL - TIDAK ADA TRANSAKSI NYATA<br>
+            UNTUK USIA 18+ - MAINLAH DENGAN BIJAK<br>
+            ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
+            <span class="jp-disclaimer">「このウェブサイトはシミュレーションのみを目的としています。」</span>
+        </div>
+        
+        <!-- FOOTER -->
+        <footer class="footer">
+            <div class="footer-links">
+                <span>🔗 LINK ALTERNATIF:</span>
+                <a href="#">AGUS777.bet</a> | <a href="#">AGUS777.org</a> | <a href="#">AGUS777.cc</a>
+                <div class="vpn-note">⚡ "GUNAKAN VPN JIKA TERBLOKIR"</div>
             </div>
-        </aside>
+            
+            <div class="payment-methods">
+                <span>💳 METODE PEMBAYARAN (VIRTUAL):</span>
+                <div class="payment-icons">BCA MANDIRI BRI BNI DANA OVO GOPAY</div>
+            </div>
+            
+            <div class="certificates">
+                <span>🏆 PAGCOR LICENSE #SI-777</span>
+                <span>🏆 BMM TESTLAB CERTIFIED</span>
+            </div>
+            
+            <div class="copyright">
+                © 2026 AGUS777. All rights reserved. Version 8.5.0
+            </div>
+        </footer>
     </div>
     
     <!-- MODAL DEPOSIT -->
@@ -345,10 +1261,10 @@
             <h2><i class="fas fa-money-bill-wave"></i> WITHDRAW VIRTUAL</h2>
             <div class="modal-body">
                 <div class="bank-select">
-                    <select id="withdrawBank">
-                        <option>BCA - 1234567890 a.n VIRTUAL</option>
-                        <option>MANDIRI - 9876543210 a.n VIRTUAL</option>
-                        <option>BRI - 5556667778 a.n VIRTUAL</option>
+                    <select id="withdrawBank" style="width:100%; padding:10px; background:#222; color:white; border:1px solid #D4AF37; border-radius:10px;">
+                        <option>BCA - 1234567890</option>
+                        <option>MANDIRI - 9876543210</option>
+                        <option>BRI - 5556667778</option>
                     </select>
                 </div>
                 <div class="nominal-input">
@@ -360,10 +1276,10 @@
         </div>
     </div>
     
-    <!-- MODAL JACKPOT (muncul otomatis) -->
+    <!-- MODAL JACKPOT -->
     <div class="modal jackpot-modal" id="jackpotModal">
-        <div class="modal-content jackpot-content">
-            <h1>🎉🎉 JACKPOT! 🎉🎉</h1>
+        <div class="modal-content">
+            <h1>🎉 JACKPOT! 🎉</h1>
             <div class="jackpot-amount" id="jackpotWinAmount">Rp 1.000.000.000</div>
             <p>ANDA MEMENANGKAN JACKPOT!</p>
             <div class="jackpot-actions">
@@ -373,27 +1289,7 @@
         </div>
     </div>
     
-    <!-- MODAL CHAT CS -->
-    <div class="chat-modal" id="chatModal">
-        <div class="chat-header">
-            <span>🎧 CUSTOMER SERVICE</span>
-            <span class="close-chat">&times;</span>
-        </div>
-        <div class="chat-body">
-            <div class="chat-message bot">
-                Ada yang bisa dibantu? Silakan tinggalkan pesan anda.
-            </div>
-            <div class="chat-message bot">
-                Jam operasional 24/7
-            </div>
-        </div>
-        <div class="chat-footer">
-            <input type="text" placeholder="Ketik pesan..." disabled>
-            <button disabled>Kirim</button>
-        </div>
-    </div>
-    
-    <!-- JAVASCRIPT UTAMA -->
+    <!-- JAVASCRIPT -->
     <script src="script.js"></script>
 </body>
 </html>
