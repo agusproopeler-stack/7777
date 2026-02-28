@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>AGUS777 • CASINO VIRTUAL</title>
+    <meta name="description" content="AGUS777 Virtual Casino - Simulasi judi online tanpa login. Main slot, roulette, dice dengan uang virtual.">
+    <meta name="keywords" content="virtual casino, slot online, roulette, dadu, simulasi judi, game virtual">
+    <meta name="author" content="AGUS PROJECT">
+    
+    <!-- FAVICON (chip/dadu) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎲</text></svg>">
+    
+    <!-- FONTS & ICONS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Poppins:wght@300;400;600;700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- HOWLER.JS (untuk sound nanti) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
+    
+    <!-- CSS UTAMA (akan dibuat terpisah nanti) -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- BACKGROUND EFFECT: glitter particles -->
+    <div class="glitter-bg" id="glitterBg"></div>
+    
+    <!-- SOUND CONTROL (pojok kanan bawah) -->
+    <div class="sound-control">
+        <button id="soundToggle" class="sound-btn">
+            <i class="fas fa-volume-up"></i>
+        </button>
+        <input type="range" id="volumeSlider" min="0" max="100" value="70" class="volume-slider">
+    </div>
+    
+    <!-- LIVE CHAT CS (pojok kanan bawah, sebelah sound) -->
+    <div class="cs-chat" id="csChatBtn">
+        <i class="fas fa-headset"></i>
+        <span class="cs-badge">1</span>
+    </div>
+    
+    <!-- MAIN WRAPPER -->
+    <div class="container">
+        <!-- SIDEBAR KIRI (LIVE FEED) -->
+        <aside class="sidebar-left">
+            <div class="live-feed">
+                <h3><i class="fas fa-satellite-dish"></i> LIVE BET</h3>
+                <div class="feed-container" id="liveFeed">
+                    <!-- akan diisi js -->
+                </div>
+            </div>
+            
+            <div class="top-winners">
+                <h3><i class="fas fa-trophy"></i> TOP WINNERS</h3>
+                <div class="winners-list" id="topWinners">
+                    <!-- akan diisi js -->
+                </div>
+            </div>
+            
+            <div class="hot-games">
+                <h3><i class="fas fa-fire"></i> HOT GAMES</h3>
+                <div class="hot-list">
+                    <div class="hot-item"><span>Golden Fortune</span> <span class="players">347</span></div>
+                    <div class="hot-item"><span>Shinobi Dice</span> <span class="players">256</span></div>
+                    <div class="hot-item"><span>Diamond Wheel</span> <span class="players">189</span></div>
+                </div>
+            </div>
+        </aside>
+        
+        <!-- MAIN CONTENT (HEADER + GAMES) -->
+        <main class="main-content">
+            <!-- HEADER -->
+            <header class="header">
+                <div class="logo-area">
+                    <h1 class="logo">AGUS777</h1>
+                    <div class="japanese-text">「完全シミュレーション - 入金不要 - 即プレイ」</div>
+                </div>
+                <div class="online-status">
+                    <span class="dot"></span>
+                    <span class="online-count" id="onlineCount">1,847</span> ONLINE
+                </div>
+            </header>
+            
+            <!-- SALDO UTAMA -->
+            <div class="balance-card glass">
+                <div class="balance-label">
+                    <i class="fas fa-gem"></i> VIRTUAL BALANCE
+                </div>
+                <div class="balance-amount" id="balanceAmount">Rp 4.000.000.000</div>
+                <div class="balance-actions">
+                    <button class="btn btn-green" id="depositBtn"><i class="fas fa-credit-card"></i> DEPOSIT VIRTUAL</button>
+                    <button class="btn btn-red" id="withdrawBtn"><i class="fas fa-money-bill-wave"></i> WITHDRAW VIRTUAL</button>
+                    <button class="btn btn-blue" id="resetBalanceBtn"><i class="fas fa-undo-alt"></i> RESET</button>
+                    <button class="btn btn-orange" id="maxBetBtn"><i class="fas fa-bolt"></i> MAX BET</button>
+                </div>
+            </div>
+            
+            <!-- LEVEL PROGRESS -->
+            <div class="level-section">
+                <div class="level-label">
+                    <span>VIP SILVER → GOLD</span>
+                    <span id="levelProgressText">0 / 10.000.000</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="levelProgressFill" style="width: 0%;"></div>
+                </div>
+                <div class="streak-badge">
+                    <i class="fas fa-fire"></i> STREAK: <span id="streakCount">3</span> HARI
+                </div>
+            </div>
+            
+            <!-- 3 GAME UTAMA -->
+            <div class="games-grid">
+                <!-- GAME 1: SLOT -->
+                <div class="game-card slot-card">
+                    <div class="game-header">
+                        <h2><span class="jp-text">「ゴールデン」</span> GOLDEN FORTUNE</h2>
+                        <div class="game-badge">RTP 98.7% <i class="fas fa-fire"></i></div>
+                    </div>
+                    
+                    <div class="slot-machine">
+                        <div class="reels-container" id="slotReels">
+                            <div class="reel" id="reel1">🍒</div>
+                            <div class="reel" id="reel2">🍒</div>
+                            <div class="reel" id="reel3">🍒</div>
+                        </div>
+                        
+                        <div class="slot-info">
+                            <div class="jackpot-display">
+                                <span>JACKPOT</span>
+                                <span id="jackpotAmount">Rp 587.432.000</span>
+                            </div>
+                        </div>
+                        
+                        <div class="slot-controls">
+                            <div class="bet-control">
+                                <button class="bet-minus" id="slotBetMinus">-</button>
+                                <input type="number" id="slotBet" value="500000" min="10000" max="10000000" step="10000">
+                                <button class="bet-plus" id="slotBetPlus">+</button>
+                                <button class="btn-max" id="slotMaxBet">MAX</button>
+                            </div>
+                            <div class="spin-controls">
+                                <button class="btn-spin" id="slotSpin"><i class="fas fa-play"></i> SPIN</button>
+                                <button class="btn-auto" id="slotAuto"><i class="fas fa-sync-alt"></i> AUTO</button>
+                                <button class="btn-stop" id="slotStop" disabled><i class="fas fa-stop"></i> STOP</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- GAME 2: ROULETTE -->
+                <div class="game-card roulette-card">
+                    <div class="game-header">
+                        <h2><span class="jp-text">「ダイヤモンド」</span> DIAMOND WHEEL</h2>
+                    </div>
+                    
+                    <div class="roulette-area">
+                        <div class="wheel-container" id="wheelContainer">
+                            <!-- roda roulette akan digambar canvas -->
+                            <canvas id="rouletteCanvas" width="200" height="200"></canvas>
+                            <div class="ball" id="rouletteBall">⚪</div>
+                        </div>
+                        
+                        <div class="betting-table" id="bettingTable">
+                            <!-- akan diisi js nanti -->
+                        </div>
+                        
+                        <div class="roulette-controls">
+                            <div class="chip-selector">
+                                <button class="chip" data-value="1000">1rb</button>
+                                <button class="chip" data-value="10000">10rb</button>
+                                <button class="chip" data-value="100000">100rb</button>
+                                <button class="chip" data-value="1000000">1jt</button>
+                                <button class="chip" data-value="10000000">10jt</button>
+                            </div>
+                            <div class="roulette-actions">
+                                <button class="btn-spin" id="rouletteSpin">SPIN WHEEL</button>
+                                <button class="btn-clear" id="rouletteClear">CLEAR</button>
+                                <button class="btn-rebet" id="rouletteRebet">REBET</button>
+                                <button class="btn-double" id="rouletteDouble">DOUBLE</button>
+                            </div>
+                        </div>
+                        
+                        <div class="history-numbers" id="rouletteHistory">
+                            <!-- akan diisi js -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- GAME 3: DICE -->
+                <div class="game-card dice-card">
+                    <div class="game-header">
+                        <h2><span class="jp-text">「忍者のサイコロ」</span> SHINOBI DICE</h2>
+                    </div>
+                    
+                    <div class="dice-area">
+                        <div class="dice-bowl">
+                            <div class="dice" id="dice1">⚀</div>
+                            <div class="dice" id="dice2">⚀</div>
+                        </div>
+                        
+                        <div class="dice-betting">
+                            <div class="betting-options" id="diceOptions">
+                                <!-- akan diisi js -->
+                            </div>
+                            
+                            <div class="dice-controls">
+                                <input type="number" id="diceBetAmount" value="100000" min="1000" max="10000000" step="1000">
+                                <div class="quick-bets">
+                                    <button class="quick-btn" data-value="1000">+1rb</button>
+                                    <button class="quick-btn" data-value="10000">+10rb</button>
+                                    <button class="quick-btn" data-value="100000">+100rb</button>
+                                    <button class="quick-btn" data-value="1000000">+1jt</button>
+                                </div>
+                                <div class="dice-actions">
+                                    <button class="btn-shake" id="diceShake"><i class="fas fa-hand-paper"></i> KOCOK DADU</button>
+                                    <button class="btn-clear" id="diceClear">CLEAR</button>
+                                    <button class="btn-double" id="diceDouble">DOUBLE</button>
+                                    <button class="btn-max" id="diceMax">MAX</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- DISCLAIMER BESAR -->
+            <div class="disclaimer-banner">
+                ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️<br>
+                WEBSITE INI 100% UNTUK SIMULASI DAN HIBURAN<br>
+                SEMUA MATA UANG, DEPOSIT, WITHDRAW, DAN HADIAH ADALAH VIRTUAL<br>
+                TIDAK ADA TRANSAKSI KEUANGAN NYATA<br>
+                UNTUK USIA 18+ - MAINLAH DENGAN BIJAK DALAM SIMULASI INI<br>
+                ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️<br>
+                <span class="jp-disclaimer">「このウェブサイトはシミュレーションとエンターテイメントのみを目的としています。すべての通貨は仮想です。」</span>
+            </div>
+            
+            <!-- FOOTER -->
+            <footer class="footer">
+                <div class="footer-links">
+                    <div class="link-alternatif">
+                        <span>🔗 LINK ALTERNATIF:</span>
+                        <a href="#">AGUS777.bet</a> | <a href="#">AGUS777.org</a> | <a href="#">AGUS777.cc</a> | <a href="#">AGUS777.win</a>
+                    </div>
+                    <div class="mirror-links">
+                        <span>🔗 MIRROR:</span>
+                        <a href="#">AGUS777.netlify.app</a> | <a href="#">AGUS777.vercel.app</a>
+                    </div>
+                    <div class="vpn-note">⚡ "GUNAKAN VPN JIKA TERBLOKIR"</div>
+                </div>
+                
+                <div class="payment-methods">
+                    <span>💳 METODE PEMBAYARAN (VIRTUAL):</span>
+                    <div class="payment-icons">
+                        BCA MANDIRI BRI BNI DANAMON OVO DANA GOPAY LINKAJA SHOPEEPAY PULSA TRI AXIS TELKOMSEL
+                    </div>
+                    <div class="min-depo">MIN DEPO 10K - PROSES 1 MENIT</div>
+                </div>
+                
+                <div class="providers">
+                    <span>🎮 PROVIDER GAME:</span>
+                    PRAGMATIC PLAY HABANERO PG SOFT MICROGAMING JOKER SPADEGAMING CQ9 PLAYSTAR
+                </div>
+                
+                <div class="certificates">
+                    <span>🏆 PAGCOR LICENSE #SI-777</span>
+                    <span>🏆 BMM TESTLAB CERTIFIED</span>
+                    <span>🏆 RNG CERTIFIED FAIR</span>
+                </div>
+                
+                <div class="copyright">
+                    © 2026 AGUS777. All rights reserved. Version 8.5.0
+                </div>
+            </footer>
+        </main>
+        
+        <!-- SIDEBAR KANAN (PROMO) -->
+        <aside class="sidebar-right">
+            <div class="promo-carousel" id="promoCarousel">
+                <div class="promo-slide active">🎉 BONUS NEW MEMBER 100% (MAKS 1JT)</div>
+                <div class="promo-slide">💰 CASHBACK MINGGUAN 10%</div>
+                <div class="promo-slide">🔥 FREE SPIN 50X HARI INI!</div>
+                <div class="promo-slide">🎂 BONUS ULANG TAHUN 500RB</div>
+                <div class="promo-slide">🏆 TURNAMEN HADIAH 1M</div>
+            </div>
+            
+            <div class="flash-sale">
+                <h4>⚡ BONUS 200% BERAKHIR DALAM:</h4>
+                <div class="countdown" id="flashCountdown">05:23:47</div>
+            </div>
+            
+            <div class="jackpot-alert" id="jackpotAlert">
+                <!-- akan muncul notifikasi random -->
+            </div>
+            
+            <div class="daily-login">
+                <h4><i class="fas fa-calendar-alt"></i> DAILY LOGIN BONUS</h4>
+                <div class="calendar" id="loginCalendar">
+                    <!-- akan diisi js -->
+                </div>
+                <div class="login-streak-text" id="loginStreakText">Login hari ke-3: Dapatkan 50RB FREE BONUS!</div>
+                <button class="btn-claim" id="claimDailyBonus">🎁 KLAIM BONUS HARIAN</button>
+            </div>
+            
+            <div class="referral">
+                <div class="referral-card">
+                    <h4>AJAK TEMAN DAPET 20% KOMISI!</h4>
+                    <button class="btn-copy" id="copyReferralLink">📋 SALIN LINK</button>
+                </div>
+            </div>
+        </aside>
+    </div>
+    
+    <!-- MODAL DEPOSIT -->
+    <div class="modal" id="depositModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2><i class="fas fa-credit-card"></i> DEPOSIT VIRTUAL</h2>
+            <div class="modal-body">
+                <div class="payment-grid">
+                    <button class="payment-method">BCA</button>
+                    <button class="payment-method">MANDIRI</button>
+                    <button class="payment-method">BRI</button>
+                    <button class="payment-method">BNI</button>
+                    <button class="payment-method">DANA</button>
+                    <button class="payment-method">OVO</button>
+                    <button class="payment-method">GOPAY</button>
+                    <button class="payment-method">PULSA</button>
+                </div>
+                <div class="nominal-input">
+                    <label>Nominal (10rb - 10M)</label>
+                    <input type="number" id="depositNominal" min="10000" max="10000000000" value="1000000" step="10000">
+                </div>
+                <button class="btn-deposit-submit" id="submitDeposit">💳 DEPOSIT SEKARANG</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- MODAL WITHDRAW -->
+    <div class="modal" id="withdrawModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2><i class="fas fa-money-bill-wave"></i> WITHDRAW VIRTUAL</h2>
+            <div class="modal-body">
+                <div class="bank-select">
+                    <select id="withdrawBank">
+                        <option>BCA - 1234567890 a.n VIRTUAL</option>
+                        <option>MANDIRI - 9876543210 a.n VIRTUAL</option>
+                        <option>BRI - 5556667778 a.n VIRTUAL</option>
+                    </select>
+                </div>
+                <div class="nominal-input">
+                    <label>Nominal (50rb - 50M)</label>
+                    <input type="number" id="withdrawNominal" min="50000" max="50000000000" value="500000" step="50000">
+                </div>
+                <button class="btn-withdraw-submit" id="submitWithdraw">💸 WITHDRAW SEKARANG</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- MODAL JACKPOT (muncul otomatis) -->
+    <div class="modal jackpot-modal" id="jackpotModal">
+        <div class="modal-content jackpot-content">
+            <h1>🎉🎉 JACKPOT! 🎉🎉</h1>
+            <div class="jackpot-amount" id="jackpotWinAmount">Rp 1.000.000.000</div>
+            <p>ANDA MEMENANGKAN JACKPOT!</p>
+            <div class="jackpot-actions">
+                <button class="btn-share">📱 BAGIKAN</button>
+                <button class="btn-play-again">🎮 MAIN LAGI</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- MODAL CHAT CS -->
+    <div class="chat-modal" id="chatModal">
+        <div class="chat-header">
+            <span>🎧 CUSTOMER SERVICE</span>
+            <span class="close-chat">&times;</span>
+        </div>
+        <div class="chat-body">
+            <div class="chat-message bot">
+                Ada yang bisa dibantu? Silakan tinggalkan pesan anda.
+            </div>
+            <div class="chat-message bot">
+                Jam operasional 24/7
+            </div>
+        </div>
+        <div class="chat-footer">
+            <input type="text" placeholder="Ketik pesan..." disabled>
+            <button disabled>Kirim</button>
+        </div>
+    </div>
+    
+    <!-- JAVASCRIPT UTAMA -->
+    <script src="script.js"></script>
+</body>
+</html>
